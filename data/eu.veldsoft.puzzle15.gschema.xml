@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="puzzle15">
+	<schema id="eu.veldsoft.puzzle15" path="/eu/veldsoft/puzzle15/">
+	</schema>
+</schemalist>

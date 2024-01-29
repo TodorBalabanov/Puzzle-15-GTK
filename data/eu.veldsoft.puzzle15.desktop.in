@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=puzzle15
+Exec=puzzle15
+Icon=eu.veldsoft.puzzle15
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

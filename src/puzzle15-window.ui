@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="Puzzle15Window" parent="GtkApplicationWindow">
+    <property name="default-width">300</property>
+    <property name="default-height">300</property>
+
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header_bar">
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="icon-name">open-menu-symbolic</property>
+            <property name="menu-model">primary_menu</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
+<child>
+  <object class="GtkGrid">
+    <property name="column-homogeneous">true</property>
+    <property name="row-homogeneous">true</property>
+
+    <!-- Row 1 -->
+    <child>
+      <object class="GtkButton">
+        <property name="label">01</property>
+      <layout>
+        <property name="column">0</property>
+        <property name="row">0</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">02</property>
+      <layout>
+        <property name="column">1</property>
+        <property name="row">0</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">03</property>
+      <layout>
+        <property name="column">2</property>
+        <property name="row">0</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">04</property>
+      <layout>
+        <property name="column">3</property>
+        <property name="row">0</property>
+      </layout>
+      </object>
+    </child>
+
+    <!-- Row 2 -->
+    <child>
+      <object class="GtkButton">
+        <property name="label">05</property>
+      <layout>
+        <property name="column">0</property>
+        <property name="row">1</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">06</property>
+      <layout>
+        <property name="column">1</property>
+        <property name="row">1</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">07</property>
+      <layout>
+        <property name="column">2</property>
+        <property name="row">1</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">08</property>
+      <layout>
+        <property name="column">3</property>
+        <property name="row">1</property>
+      </layout>
+      </object>
+    </child>
+
+    <!-- Row 3 -->
+    <child>
+      <object class="GtkButton">
+        <property name="label">09</property>
+      <layout>
+        <property name="column">0</property>
+        <property name="row">2</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">10</property>
+      <layout>
+        <property name="column">1</property>
+        <property name="row">2</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">11</property>
+      <layout>
+        <property name="column">2</property>
+        <property name="row">2</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">12</property>
+      <layout>
+        <property name="column">3</property>
+        <property name="row">2</property>
+      </layout>
+      </object>
+    </child>
+
+    <!-- Row 4 -->
+    <child>
+      <object class="GtkButton">
+        <property name="label">13</property>
+      <layout>
+        <property name="column">0</property>
+        <property name="row">3</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">14</property>
+      <layout>
+        <property name="column">1</property>
+        <property name="row">3</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">15</property>
+      <layout>
+        <property name="column">2</property>
+        <property name="row">3</property>
+      </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label">  </property>
+      <layout>
+        <property name="column">3</property>
+        <property name="row">3</property>
+      </layout>
+      </object>
+    </child>
+
+  </object>
+</child>
+
+    
+  </template>
+
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About puzzle15</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
