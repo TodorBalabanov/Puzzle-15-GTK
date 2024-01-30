@@ -1,14 +1,12 @@
 puzzle15_sources = [
   'main.c',
-  'puzzle15-window.c',
   'puzzle15-application.c',
+  'puzzle15-window.c',
 ]
 
 puzzle15_deps = [
-  dependency('libadwaita-1', version: '>= 1.0'),
+  dependency('gtk4'),
 ]
-
-gnome = import('gnome')
 
 puzzle15_sources += gnome.compile_resources('puzzle15-resources',
   'puzzle15.gresource.xml',
@@ -17,5 +15,5 @@ puzzle15_sources += gnome.compile_resources('puzzle15-resources',
 
 executable('puzzle15', puzzle15_sources,
   dependencies: puzzle15_deps,
-  install: true,
+       install: true,
 )

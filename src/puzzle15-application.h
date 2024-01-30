@@ -14,19 +14,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 #pragma once
 
-#include <adwaita.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define PUZZLE15_TYPE_APPLICATION (puzzle15_application_get_type())
 
-G_DECLARE_FINAL_TYPE (Puzzle15Application, puzzle15_application, PUZZLE15, APPLICATION, AdwApplication)
+G_DECLARE_FINAL_TYPE (Puzzle15Application, puzzle15_application, PUZZLE15, APPLICATION, GtkApplication)
 
-Puzzle15Application *puzzle15_application_new (gchar *application_id,
+Puzzle15Application *puzzle15_application_new (const char        *application_id,
                                                GApplicationFlags  flags);
 
 G_END_DECLS

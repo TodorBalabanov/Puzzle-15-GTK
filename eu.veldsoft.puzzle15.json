@@ -1,7 +1,7 @@
 {
     "app-id" : "eu.veldsoft.puzzle15",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "45",
     "sdk" : "org.gnome.Sdk",
     "command" : "puzzle15",
     "finish-args" : [
@@ -30,7 +30,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/todor/Desktop/Puzzle15"
+                    "url" : "file:///home/todor/Desktop"
                 }
             ]
         }

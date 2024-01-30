@@ -14,112 +14,106 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
+
+#include "config.h"
 
 #include "puzzle15-application.h"
 #include "puzzle15-window.h"
 
 struct _Puzzle15Application
 {
-  GtkApplication parent_instance;
+	GtkApplication parent_instance;
 };
 
-G_DEFINE_TYPE (Puzzle15Application, puzzle15_application, ADW_TYPE_APPLICATION)
+G_DEFINE_TYPE (Puzzle15Application, puzzle15_application, GTK_TYPE_APPLICATION)
 
 Puzzle15Application *
-puzzle15_application_new (gchar *application_id,
+puzzle15_application_new (const char        *application_id,
                           GApplicationFlags  flags)
 {
-  return g_object_new (PUZZLE15_TYPE_APPLICATION,
-                       "application-id", application_id,
-                       "flags", flags,
-                       NULL);
-}
+	g_return_val_if_fail (application_id != NULL, NULL);
 
-static void
-puzzle15_application_finalize (GObject *object)
-{
-  Puzzle15Application *self = (Puzzle15Application *)object;
-
-  G_OBJECT_CLASS (puzzle15_application_parent_class)->finalize (object);
+	return g_object_new (PUZZLE15_TYPE_APPLICATION,
+	                     "application-id", application_id,
+	                     "flags", flags,
+	                     NULL);
 }
 
 static void
 puzzle15_application_activate (GApplication *app)
 {
-  GtkWindow *window;
+	GtkWindow *window;
 
-  /* It's good practice to check your parameters at the beginning of the
-   * function. It helps catch errors early and in development instead of
-   * by your users.
-   */
-  g_assert (GTK_IS_APPLICATION (app));
+	g_assert (PUZZLE15_IS_APPLICATION (app));
 
-  /* Get the current window or create one if necessary. */
-  window = gtk_application_get_active_window (GTK_APPLICATION (app));
-  if (window == NULL)
-    window = g_object_new (PUZZLE15_TYPE_WINDOW,
-                           "application", app,
-                           NULL);
+	window = gtk_application_get_active_window (GTK_APPLICATION (app));
 
-  /* Ask the window manager/compositor to present the window. */
-  gtk_window_present (window);
+	if (window == NULL)
+		window = g_object_new (PUZZLE15_TYPE_WINDOW,
+		                       "application", app,
+		                       NULL);
+
+	gtk_window_present (window);
 }
-
 
 static void
 puzzle15_application_class_init (Puzzle15ApplicationClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GApplicationClass *app_class = G_APPLICATION_CLASS (klass);
+	GApplicationClass *app_class = G_APPLICATION_CLASS (klass);
 
-  object_class->finalize = puzzle15_application_finalize;
-
-  /*
-   * We connect to the activate callback to create a window when the application
-   * has been launched. Additionally, this callback notifies us when the user
-   * tries to launch a "second instance" of the application. When they try
-   * to do that, we'll just present any existing window.
-   */
-  app_class->activate = puzzle15_application_activate;
+	app_class->activate = puzzle15_application_activate;
 }
 
 static void
-puzzle15_application_show_about (GSimpleAction *action,
-                                 GVariant      *parameter,
-                                 gpointer       user_data)
+puzzle15_application_about_action (GSimpleAction *action,
+                                   GVariant      *parameter,
+                                   gpointer       user_data)
 {
-  Puzzle15Application *self = PUZZLE15_APPLICATION (user_data);
-  GtkWindow *window = NULL;
-  const gchar *authors[] = {"Todor Balabanov", NULL};
+	static const char *authors[] = {"Todor Balabanov", NULL};
+	Puzzle15Application *self = user_data;
+	GtkWindow *window = NULL;
 
-  g_return_if_fail (PUZZLE15_IS_APPLICATION (self));
+	g_assert (PUZZLE15_IS_APPLICATION (self));
 
-  window = gtk_application_get_active_window (GTK_APPLICATION (self));
+	window = gtk_application_get_active_window (GTK_APPLICATION (self));
 
-  gtk_show_about_dialog (window,
-                         "program-name", "puzzle15",
-                         "authors", authors,
-                         "version", "0.1.0",
-                         NULL);
+	gtk_show_about_dialog (window,
+	                       "program-name", "puzzle15",
+	                       "logo-icon-name", "eu.veldsoft.puzzle15",
+	                       "authors", authors,
+	                       "version", "0.1.0",
+	                       "copyright", "© 2024 Todor Balabanov",
+	                       NULL);
 }
 
+static void
+puzzle15_application_quit_action (GSimpleAction *action,
+                                  GVariant      *parameter,
+                                  gpointer       user_data)
+{
+	Puzzle15Application *self = user_data;
+
+	g_assert (PUZZLE15_IS_APPLICATION (self));
+
+	g_application_quit (G_APPLICATION (self));
+}
+
+static const GActionEntry app_actions[] = {
+	{ "quit", puzzle15_application_quit_action },
+	{ "about", puzzle15_application_about_action },
+};
 
 static void
 puzzle15_application_init (Puzzle15Application *self)
 {
-  g_autoptr (GSimpleAction) quit_action = g_simple_action_new ("quit", NULL);
-  g_signal_connect_swapped (quit_action, "activate", G_CALLBACK (g_application_quit), self);
-  g_action_map_add_action (G_ACTION_MAP (self), G_ACTION (quit_action));
-
-  g_autoptr (GSimpleAction) about_action = g_simple_action_new ("about", NULL);
-  g_signal_connect (about_action, "activate", G_CALLBACK (puzzle15_application_show_about), self);
-  g_action_map_add_action (G_ACTION_MAP (self), G_ACTION (about_action));
-
-  gtk_application_set_accels_for_action (GTK_APPLICATION (self),
-                                         "app.quit",
-                                         (const char *[]) {
-                                           "<primary>q",
-                                           NULL,
-                                         });
+	g_action_map_add_action_entries (G_ACTION_MAP (self),
+	                                 app_actions,
+	                                 G_N_ELEMENTS (app_actions),
+	                                 self);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (self),
+	                                       "app.quit",
+	                                       (const char *[]) { "<primary>q", NULL });
 }

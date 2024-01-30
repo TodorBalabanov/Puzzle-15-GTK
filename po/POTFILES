@@ -1,7 +1,6 @@
 data/eu.veldsoft.puzzle15.desktop.in
-data/eu.veldsoft.puzzle15.appdata.xml.in
+data/eu.veldsoft.puzzle15.metainfo.xml.in
 data/eu.veldsoft.puzzle15.gschema.xml
-src/puzzle15-window.ui
 src/main.c
 src/puzzle15-window.c
-
+src/puzzle15-window.ui
