@@ -35,7 +35,7 @@ main (int   argc,
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	app = puzzle15_application_new ("eu.veldsoft.puzzle15", G_APPLICATION_DEFAULT_FLAGS);
+	app = puzzle15_application_new ("eu.veldsoft.puzzle15", G_APPLICATION_FLAGS_NONE);
 	ret = g_application_run (G_APPLICATION (app), argc, argv);
 
 	return ret;
