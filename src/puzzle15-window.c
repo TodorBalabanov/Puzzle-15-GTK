@@ -47,8 +47,38 @@ struct _Puzzle15Window
 
 G_DEFINE_FINAL_TYPE (Puzzle15Window, puzzle15_window, GTK_TYPE_APPLICATION_WINDOW)
 
+static GtkButton *buttons[4][4];
+
+static void swap_labels(GtkButton *a, GtkButton *b) {
+	if(strcmp(gtk_button_get_label(a),"  ") != 0) {
+		return;
+	}
+
+	gtk_button_set_label(a, gtk_button_get_label(b));
+	gtk_button_set_label(b, "  ");
+}
+
 static void button_clicked(GtkButton *button, gpointer data) {
-	g_print ("%s\n", gtk_button_get_label(button));
+	for(int i=0; i<4; i++) {
+		for(int j=0; j<4; j++) {
+		  if(buttons[i][j] == button) {
+				if(0 <= i-1) {
+					swap_labels(buttons[i-1][j], buttons[i][j]);
+				}
+				if(0 <= j-1) {
+					swap_labels(buttons[i][j-1], buttons[i][j]);
+				}
+				if(i+1 <= 3) {
+					swap_labels(buttons[i+1][j], buttons[i][j]);
+				}
+				if(j+1 <= 3) {
+					swap_labels(buttons[i][j+1], buttons[i][j]);
+				}
+
+				return;
+			}
+		}
+	}
 }
 
 static void
@@ -80,21 +110,28 @@ static void
 puzzle15_window_init (Puzzle15Window *self)
 {
 	gtk_widget_init_template (GTK_WIDGET (self));
-  g_signal_connect(self->button01, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button02, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button03, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button04, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button05, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button06, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button07, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button08, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button09, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button10, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button11, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button12, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button13, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button14, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button15, "clicked", G_CALLBACK(button_clicked), NULL);
-  g_signal_connect(self->button00, "clicked", G_CALLBACK(button_clicked), NULL);
+
+	buttons[0][0] = self->button01;
+	buttons[1][0] = self->button02;
+	buttons[2][0] = self->button03;
+	buttons[3][0] = self->button04;
+	buttons[0][1] = self->button05;
+	buttons[1][1] = self->button06;
+	buttons[2][1] = self->button07;
+	buttons[3][1] = self->button08;
+	buttons[0][2] = self->button09;
+	buttons[1][2] = self->button10;
+	buttons[2][2] = self->button11;
+	buttons[3][2] = self->button12;
+	buttons[0][3] = self->button13;
+	buttons[1][3] = self->button14;
+	buttons[2][3] = self->button15;
+	buttons[3][3] = self->button00;
+
+	for(int i=0; i<4; i++) {
+		for(int j=0; j<4; j++) {
+		  g_signal_connect(buttons[i][j], "clicked", G_CALLBACK(button_clicked), NULL);
+		}
+	}
 }
 
